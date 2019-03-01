@@ -1,7 +1,4 @@
 .status {
-
-    margin-top: $margin-xxl;
-
     table {
         td {
             padding-top: $margin-xxs;
@@ -44,12 +41,6 @@
             padding: 0 1.5em; 
             line-height: 2em;
             position: relative;
-        
-            &:first-child {
-                &:before {
-                    display: none;
-                }
-            }
             
             &:last-child {
                 &:before {

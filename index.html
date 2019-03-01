@@ -71,29 +71,29 @@ permalink: index.php
                     <td>mumble.morningbird.eu</td>
                 </tr>
                 <tr>
-                    <td>PORT:</td>
+                    <td>Port:</td>
                     <td>64738</td>
                 </tr>
                 <?php if($is_online) : ?>
                   <tr>
-                      <td>NAME:</td>
+                      <td>Name:</td>
                       <td><?= $response['original']['name']; ?></td>
                   </tr>
                 <?php endif; ?>
                 <?php if($is_online) : ?>
                   <tr>
-                      <td>STATUS:</td>
+                      <td>Status:</td>
                       <td id="online">Online</td>
                   </tr>
                 <?php else : ?>
                   <tr>
-                      <td>STATUS:</td>
+                      <td>Status:</td>
                       <td id="offline">Offline</td>
                   </tr>
                 <?php endif; ?>
                 <?php if($is_online) : ?>
                   <tr>
-                      <td>SLOTS:</td>
+                      <td>Slots:</td>
                       <td><?= count($response['users']); ?>/<?= $response['original']['x_gtmurmur_max_users']; ?></td>
                   </tr>
                 <?php endif; ?>
