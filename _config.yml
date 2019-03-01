@@ -1,6 +1,6 @@
 # My variables
-name:
-description:
+name: mumble.morningbird.eu
+description: Welcome to my mumble server! (*ﾉ∀`*) ❤️❤️. Please take a seat, everyone is welcomed.
 author:
   name: Michał Daniel
   email: contact@michaldaniel.eu
@@ -27,6 +27,6 @@ kramdown:
 highlighter: rouge
 
 # Site
-url:
+url: https://mumble.morningbird.eu
 website: https://morningbird.eu
 sources: https://github.com/michaldaniel

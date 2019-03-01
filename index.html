@@ -1,4 +1,135 @@
 ---
 layout: core
-title:
+title: Mumble server status page
+permalink: index.php
 ---
+
+{% raw %}
+<?php 
+    ini_set('display_startup_errors',1); 
+    ini_set('display_errors',1);
+    error_reporting(-1);
+
+    require_once('classes/MurmurQuery.php');
+
+    $murmur = new MurmurQuery('127.0.0.1', 27800, 200, 'json');  
+    $response = $murmur->get_status();
+    $is_online = $murmur->is_online();
+
+    function print_channels($channels) {
+        // We'll have to deal with the root channel separately
+        if(array_key_exists('root', $channels)) {
+            echo $channels['name'];
+            echo "<ul class='tree'>";
+            if(count($channels['root']['users']) > 0) {
+                foreach($channels['root']['users'] as $user) {
+                    echo "<li>", $user['name'], "</li>";
+                }
+            }
+
+            $tmp = $channels['root']['channels'];
+
+            unset($channels['root']['users']);
+            unset($channels['root']['channels']);
+
+            print_channels($tmp);
+            echo "</ul>";
+            echo "</li>";
+        } else {
+            if(count($channels) > 0) {
+                foreach($channels as $channel)
+                {
+                    echo "<li> ", $channel['name'];
+                    echo "<ul>";
+
+                    if(count($channel['users']) > 0) {
+                        foreach($channel['users'] as $user) {
+                            echo "<li>👤 ", $user['name'], "</li>";
+                        }
+                    }
+
+                    unset($channel['users']);
+                    print_channels($channel['channels']);
+                    unset($channel['channels']);
+                    echo "</ul>";
+                    echo "</li>";
+                }
+            }
+        }
+    }
+?>
+{% endraw %}
+
+{% include ascii.html %}
+
+<section class="status monospace">
+	<div class="wrapper">
+        <table class="first-column-header">
+            <tbody>
+                <tr>
+                    <td>IP:</td>
+                    <td>mumble.morningbird.eu</td>
+                </tr>
+                <tr>
+                    <td>PORT:</td>
+                    <td>64738</td>
+                </tr>
+                <?php if($is_online) : ?>
+                  <tr>
+                      <td>NAME:</td>
+                      <td><?php $response['original']['name']; ?></td>
+                  </tr>
+                <?php endif; ?>
+                <?php if($is_online) : ?>
+                  <tr>
+                      <td>STATUS:</td>
+                      <td id="online">Online</td>
+                  </tr>
+                <?php else : ?>
+                  <tr>
+                      <td>STATUS:</td>
+                      <td id="offline">Offline</td>
+                  </tr>
+                <?php endif; ?>
+                <?php if($is_online) : ?>
+                  <tr>
+                      <td>SLOTS:</td>
+                      <td><?php count($response['users']); ?>/<?php $response['original']['x_gtmurmur_max_users']; ?></td>
+                  </tr>
+                <?php endif; ?>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<section class="links monospace">
+	<div class="wrapper">
+        <h2 class="accent"><b>Links</b></h2>
+        <?php if($is_online) : ?>
+        <a href="mumble://mumble.morningbird.eu/?version=1.2.19">[Join mumble server]</a><br>
+        <?php endif; ?>
+        <a href="https://steamcommunity.com/groups/mumbleelita">[Steam group]</a>
+    </div>
+</section>
+
+<section class="rules monospace">
+	<div class="wrapper">
+	    <h2 class="accent"><b>Rules</b></h2>
+        <blockquote>
+                <b>1.</b> Don't be a total dick
+            <br><b>2.</b> Have fun
+        </blockquote>
+	</div>
+</section>
+
+<?php if($is_online) : ?>              
+<section class="preview monospace">
+    <div class="wrapper">
+        <h2 class="accent"><b>Preview</b></h2>
+        <?php print_channels($response['original']); ?>
+    </div>
+</section>
+<?php endif; ?>
+
+
+

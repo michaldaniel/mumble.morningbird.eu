@@ -1,6 +1,10 @@
-# core.morningbird.eu
+# mumble.morningbird.eu
 
-Template for creating simple status pages
+Source of my mumble server site running at mumble.morningbird.eu  
+
+### Notice
+
+The repository contains classes PHP code from [MurmurQuery project](https://github.com/edmundask/MurmurQuery) with different copytight under MIT license.
 
 ## License
 
