@@ -77,7 +77,7 @@ permalink: index.php
                 <?php if($is_online) : ?>
                   <tr>
                       <td>NAME:</td>
-                      <td><?php $response['original']['name']; ?></td>
+                      <td><?= $response['original']['name']; ?></td>
                   </tr>
                 <?php endif; ?>
                 <?php if($is_online) : ?>
@@ -94,7 +94,7 @@ permalink: index.php
                 <?php if($is_online) : ?>
                   <tr>
                       <td>SLOTS:</td>
-                      <td><?php count($response['users']); ?>/<?php $response['original']['x_gtmurmur_max_users']; ?></td>
+                      <td><?= count($response['users']); ?>/<?= $response['original']['x_gtmurmur_max_users']; ?></td>
                   </tr>
                 <?php endif; ?>
             </tbody>
